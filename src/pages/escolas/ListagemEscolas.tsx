@@ -2,21 +2,21 @@ import { useEffect, useMemo, useState } from 'react';
 import { Icon, IconButton, LinearProgress, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow } from '@mui/material';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { IListagemPessoa, PessoasService, } from '../../compartilhar/servicos/api/alunos/PessoasService';
+import { IListagemEscolas, EscolasService, } from '../../compartilhar/servicos/api/escolas/EscolasService';
 import { FerramentasListagem } from '../../compartilhar/components';
 import { LayoutBase } from '../../compartilhar/layout';
 import { useDebounce } from '../../compartilhar/hooks';
 import { Environment } from '../../compartilhar/environment';
 
 
-export const ListagemPessoas: React.FC = () => {
+export const ListagemEscolas: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { debounce } = useDebounce();
   const navigate = useNavigate();
 
 
 
-  const [rows, setRows] = useState<IListagemPessoa[]>([]);
+  const [rows, setRows] = useState<IListagemEscolas[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
 
@@ -35,7 +35,7 @@ export const ListagemPessoas: React.FC = () => {
     setIsLoading(true);
 
     debounce(() => {
-      PessoasService.getAll(pagina, busca)
+      EscolasService.getAll(pagina, busca)
         .then((result) => {
           setIsLoading(false);
 
@@ -55,7 +55,7 @@ export const ListagemPessoas: React.FC = () => {
 const handleDelete = (id: number) => {
   // eslint-disable-next-line no-restricted-globals
   if (confirm('Realmente deseja apagar?')){
-    PessoasService.deleteById(id)
+    EscolasService.deleteById(id)
     .then(result => {
       if (result instanceof Error) {
         alert(result.message)
@@ -74,13 +74,13 @@ const handleDelete = (id: number) => {
 
   return (
     <LayoutBase
-      titulo='Listagem de Alunas'
+      titulo='Listagem de escolas'
       barraFerramentas={
         <FerramentasListagem
           mostrarInputBusca
           busca={busca}
           textoBotaoNovo='Nova'
-          clicarEmNovo={() => navigate('/pessoas/detalhe/nova')}
+          clicarEmNovo={() => navigate('/escolas/detalhe/nova')}
           aoMudarTextoBusca={texto => setSearchParams({ busca: texto, pagina: '1' }, { replace: true })}
         />
       }
@@ -90,8 +90,8 @@ const handleDelete = (id: number) => {
           <TableHead>
             <TableRow>
               <TableCell>Ações</TableCell>
-              <TableCell>Nome completo</TableCell>
-              <TableCell>Email</TableCell>
+              <TableCell>Nome</TableCell>
+              
             </TableRow>
           </TableHead>
           <TableBody>
@@ -103,13 +103,12 @@ const handleDelete = (id: number) => {
                     <Icon>delete</Icon>
                   </IconButton>
                   <IconButton
-                  onClick={() => navigate(`/pessoas/detalhe/${row.id}`)}
+                  onClick={() => navigate(`/escolas/detalhe/${row.id}`)}
                   >
                     <Icon>edit</Icon>
                   </IconButton>
                 </TableCell>
-                <TableCell>{row.nomeCompleto}</TableCell>
-                <TableCell>{row.email}</TableCell>
+                <TableCell>{row.nome}</TableCell>
               </TableRow>
             ))}
           </TableBody>

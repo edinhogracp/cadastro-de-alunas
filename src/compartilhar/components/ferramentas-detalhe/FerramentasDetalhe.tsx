@@ -62,10 +62,10 @@ return (
             </Button>
         )}
 
-        {mostrarBotaoSalvarCarregando && (
+   {/*      {mostrarBotaoSalvarCarregando && (
         <Skeleton width={110} height={60} />
       )}
-
+ */}
         {mostrarSalvareFechar &&  (           
             <Button
                 color='inherit'

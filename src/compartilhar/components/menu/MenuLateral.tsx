@@ -1,5 +1,5 @@
 import { Avatar, Box, Divider, Drawer, Icon, List, ListItemButton, ListItemIcon, ListItemText, useMediaQuery, useTheme } from "@mui/material";
-import { useAppThemeContext, useDrawerContext } from "../../contexts";
+import { useAppThemeContext, useAuthContext, useDrawerContext } from "../../contexts";
 import { useNavigate, useMatch, useResolvedPath } from "react-router-dom";
 
 
@@ -49,6 +49,7 @@ export const MenuLateral: React.FC<IMenuLateralProps > = ({ children }) => {
 
     const { isDrawerOpen, toggleDrawer, drawerOptions } = useDrawerContext();
     const { toggleTheme  } = useAppThemeContext();
+    const { logout  } = useAuthContext();
 
 
     return(
@@ -84,7 +85,13 @@ export const MenuLateral: React.FC<IMenuLateralProps > = ({ children }) => {
                 <Icon>contrast</Icon>
                 </ListItemIcon>
                 <ListItemText primary="Trocar tema" />
-        </ListItemButton> 
+                </ListItemButton> 
+                <ListItemButton onClick={logout}>
+                <ListItemIcon>
+                <Icon>logout</Icon>
+                </ListItemIcon>
+                <ListItemText primary="Logout" />
+                </ListItemButton> 
             </List>           
             </Box>
 

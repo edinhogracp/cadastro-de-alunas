@@ -1,25 +1,30 @@
 
 import { BrowserRouter } from 'react-router-dom';
 import { AppRoutes } from "./routes";
-import { AppThemeProvider, DrawerProvider } from './compartilhar/contexts';
+import { AppThemeProvider, AuthProvider, DrawerProvider } from './compartilhar/contexts';
 
-import { MenuLateral } from './compartilhar/components';
+import { Login, MenuLateral } from './compartilhar/components';
 
 
 export const App = ( ) => {
   return (
+    <AuthProvider>
     <AppThemeProvider>
-      <DrawerProvider>
-        <BrowserRouter>
 
-          <MenuLateral>
-            <AppRoutes />
-          </MenuLateral>
-            
+      <Login>
 
-        </BrowserRouter>
-      </DrawerProvider>
+        <DrawerProvider>
+          <BrowserRouter>
+            <MenuLateral>
+              <AppRoutes />
+            </MenuLateral>
+          </BrowserRouter>
+        </DrawerProvider>
+
+      </Login>
+
     </AppThemeProvider>
+  </AuthProvider>
   );
 }
 
